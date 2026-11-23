@@ -1,0 +1,1722 @@
+/* ========================================================
+   BILIS QUEST - CSS STYLESHEET
+   Retro Meme & Arcade Aesthetic
+   ======================================================== */
+
+:root {
+  --primary-neon: #ff0055;
+  --secondary-neon: #00f0ff;
+  --accent-gold: #ffd700;
+  --bg-dark: #0f1016;
+  --card-bg: #1a1b26;
+  --border-neon: #3a3f58;
+  --text-main: #ffffff;
+  --text-dim: #9aa5ce;
+  --font-retro: 'Press Start 2P', monospace;
+  --font-geo: 'Noto Sans Georgian', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: var(--font-geo);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sound Toggle Button */
+.sound-toggle-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--secondary-neon);
+  background: rgba(15, 16, 22, 0.85);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+.sound-toggle-btn:hover {
+  transform: scale(1.1);
+  background: var(--secondary-neon);
+}
+
+/* Screen Transitions */
+.screen {
+  display: none;
+  min-height: 100vh;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.screen.active-screen {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+}
+
+/* ========================================================
+   SCREEN 1: CHARACTER SELECTION SCREEN
+   ======================================================== */
+#selectScreen {
+  position: relative;
+  background: radial-gradient(circle at center, #1f1b3c 0%, #0d0e15 100%);
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.stars-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 100px 150px, #ffd700, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 200px 90px, #00f0ff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 300px 240px, #ff0055, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 450px 120px, #ffffff, rgba(0,0,0,0));
+  background-size: 550px 550px;
+  opacity: 0.5;
+  animation: starsFloat 40s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes starsFloat {
+  from { background-position: 0 0; }
+  to { background-position: 550px 550px; }
+}
+
+.select-container {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.retro-badge {
+  background: linear-gradient(90deg, #ff0055, #ff5500);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+  animation: pulseBadge 2s infinite ease-in-out;
+}
+
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.main-title {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 
+    0 0 10px rgba(0, 240, 255, 0.8),
+    0 0 20px rgba(255, 0, 85, 0.8),
+    3px 3px 0px #000;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: var(--text-dim);
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+/* Character Card */
+.character-card-container {
+  perspective: 1000px;
+  margin-bottom: 28px;
+}
+
+.character-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 3px solid #ff0055;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 
+    0 0 30px rgba(255, 0, 85, 0.3),
+    inset 0 0 20px rgba(0, 240, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 320px;
+  max-width: 90vw;
+}
+
+.character-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 
+    0 0 40px rgba(255, 0, 85, 0.6),
+    0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.photo-frame {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--secondary-neon);
+  background: #000;
+}
+
+.char-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.4s ease;
+}
+
+.character-card:hover .char-photo {
+  transform: scale(1.06);
+}
+
+/* Corner decorations */
+.corner-decoration {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--accent-gold);
+  border-style: solid;
+  pointer-events: none;
+}
+.corner-decoration.top-left { top: 4px; left: 4px; border-width: 2px 0 0 2px; }
+.corner-decoration.top-right { top: 4px; right: 4px; border-width: 2px 2px 0 0; }
+.corner-decoration.bottom-left { bottom: 4px; left: 4px; border-width: 0 0 2px 2px; }
+.corner-decoration.bottom-right { bottom: 4px; right: 4px; border-width: 0 2px 2px 0; }
+
+.char-info {
+  margin-top: 16px;
+  text-align: left;
+}
+
+.char-name {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--accent-gold);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.char-tags {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.tag {
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid var(--secondary-neon);
+  color: var(--secondary-neon);
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.char-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-bar {
+  width: 110px;
+  height: 8px;
+  background: #252836;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0055, #ffd700);
+  border-radius: 4px;
+}
+
+/* Arcade Buttons */
+.button-wrapper {
+  margin-top: 8px;
+}
+
+.arcade-btn {
+  position: relative;
+  background: linear-gradient(180deg, #ff0055 0%, #aa0038 100%);
+  color: #fff;
+  border: none;
+  font-family: var(--font-geo);
+  font-size: 1.25rem;
+  font-weight: 900;
+  padding: 16px 48px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 
+    0 8px 0 #770028,
+    0 12px 25px rgba(255, 0, 85, 0.6);
+  letter-spacing: 1px;
+  overflow: hidden;
+  transition: all 0.1s ease;
+}
+
+.arcade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 10px 0 #770028,
+    0 16px 30px rgba(255, 0, 85, 0.8);
+}
+
+.arcade-btn:active {
+  transform: translateY(6px);
+  box-shadow: 
+    0 2px 0 #770028,
+    0 5px 15px rgba(255, 0, 85, 0.6);
+}
+
+.btn-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transform: skewX(-20deg);
+  animation: shineLoop 3s infinite;
+}
+
+@keyframes shineLoop {
+  0% { left: -100%; }
+  30%, 100% { left: 150%; }
+}
+
+.warning-hint {
+  margin-top: 18px;
+  font-size: 0.82rem;
+  color: #ff9900;
+  opacity: 0.9;
+}
+
+/* Shake Animation for screen/card */
+.shake-anim {
+  animation: crazyShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes crazyShake {
+  10%, 90% { transform: translate3d(-3px, 0, 0) rotate(-1deg); }
+  20%, 80% { transform: translate3d(5px, 0, 0) rotate(2deg); }
+  30%, 50%, 70% { transform: translate3d(-7px, 0, 0) rotate(-2deg); }
+  40%, 60% { transform: translate3d(7px, 0, 0) rotate(2deg); }
+}
+
+/* ========================================================
+   MODAL / POPUP DIALOGS (Click 1 & Click 2 Warnings)
+   ======================================================== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background: #1e1526;
+  border: 3px solid #ff0055;
+  border-radius: 20px;
+  width: 480px;
+  max-width: 95%;
+  padding: 28px;
+  box-shadow: 
+    0 0 50px rgba(255, 0, 85, 0.6),
+    inset 0 0 25px rgba(255, 215, 0, 0.1);
+  text-align: center;
+  animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+  margin-bottom: 16px;
+}
+
+.modal-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 8px;
+  animation: bounceIcon 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes bounceIcon {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+#modalTitle {
+  font-size: 1.4rem;
+  color: var(--accent-gold);
+  font-weight: 900;
+}
+
+.modal-body {
+  margin-bottom: 24px;
+}
+
+.modal-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #fff;
+  padding: 14px;
+  background: rgba(255, 0, 85, 0.15);
+  border-radius: 12px;
+  border: 1px dashed #ff0055;
+}
+
+.modal-btn {
+  font-size: 1.05rem;
+  padding: 12px 36px;
+}
+
+/* ========================================================
+   SCREEN 2: GAME SCREEN & ROOMS
+   ======================================================== */
+#gameScreen {
+  background: #13141f;
+  justify-content: space-between;
+}
+
+/* Header */
+.game-header {
+  background: #1a1c2a;
+  border-bottom: 2px solid var(--border-neon);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-btn {
+  background: #2b2e44;
+  border: 1px solid var(--border-neon);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: var(--font-geo);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: #ff0055;
+  border-color: #ff0055;
+  transform: translateY(-1px);
+}
+
+.player-mini-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 4px 12px 4px 6px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.mini-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--accent-gold);
+}
+
+.player-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.game-header-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--secondary-neon);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.replay-btn {
+  background: linear-gradient(90deg, #ff9900, #ff5500);
+}
+
+/* Rooms Navigation Tabs */
+.rooms-nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 12px 24px;
+  background: #11121a;
+  border-bottom: 2px solid #232636;
+}
+
+.room-tab {
+  background: #1b1e2c;
+  border: 2px solid #2c3046;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+}
+
+.room-tab:hover {
+  border-color: var(--secondary-neon);
+  transform: translateY(-2px);
+  background: #23273a;
+}
+
+.room-tab.active {
+  background: linear-gradient(180deg, #2c1a3b 0%, #1a1b2d 100%);
+  border-color: #ff0055;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
+}
+
+.room-icon {
+  font-size: 1.6rem;
+}
+
+.room-name {
+  font-family: var(--font-geo);
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.room-desc {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.room-tab.active .room-name {
+  color: var(--accent-gold);
+}
+
+/* ========================================================
+   GAME STAGE & SCENES
+   ======================================================== */
+.game-stage-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  min-height: 480px;
+}
+
+.game-stage {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  height: 520px;
+  background: #0d0f17;
+  border: 3px solid var(--border-neon);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
+}
+
+/* Comic Speech Bubble */
+.speech-bubble {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  background: #ffffff;
+  color: #111;
+  padding: 12px 22px;
+  border-radius: 18px;
+  font-weight: 900;
+  font-size: 1.05rem;
+  z-index: 100;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  border: 3px solid #111;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 80%;
+  text-align: center;
+}
+
+.speech-bubble.active {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.speech-pointer {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid #ffffff;
+}
+
+/* Visual FX Layer */
+.fx-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.fx-star {
+  position: absolute;
+  font-size: 2rem;
+  animation: burstFade 0.7s forwards ease-out;
+}
+
+@keyframes burstFade {
+  0% { transform: scale(0.3) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.6) translateY(-40px) rotate(90deg); opacity: 0; }
+}
+
+/* Common Room Scene rules */
+.room-scene {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.room-scene.active-scene {
+  display: block;
+}
+
+.character-actor {
+  position: absolute;
+  z-index: 50;
+  transition: transform 0.1s linear;
+}
+
+.character-sprite-wrapper {
+  position: relative;
+  width: 160px;
+  height: 220px;
+}
+
+.char-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.6));
+}
+
+/* ========================================================
+   SCENE 1: JIKIA'S ROOM (მაცივარს ახტება ცხვირით)
+   ======================================================== */
+#scene-jikia {
+  background: linear-gradient(180deg, #2b334a 0%, #171b26 70%, #11131a 100%);
+}
+
+.kitchen-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75%;
+  background: 
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px);
+}
+
+.kitchen-clock {
+  position: absolute;
+  top: 30px;
+  left: 80px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #eee;
+  border: 4px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-hand {
+  width: 2px;
+  height: 22px;
+  background: #111;
+  transform-origin: bottom center;
+  animation: clockTick 12s linear infinite;
+}
+
+@keyframes clockTick {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.kitchen-shelf {
+  position: absolute;
+  top: 90px;
+  left: 180px;
+  width: 200px;
+  height: 14px;
+  background: #8b5a2b;
+  border-radius: 4px;
+  display: flex;
+  gap: 20px;
+  padding-left: 20px;
+}
+
+.shelf-item {
+  font-size: 1.6rem;
+  margin-top: -30px;
+}
+
+.kitchen-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  background: repeating-linear-gradient(45deg, #1f232e 0px, #1f232e 30px, #171a22 30px, #171a22 60px);
+  border-top: 6px solid #111;
+}
+
+/* Jikia's Refrigerator */
+.fridge-wrapper {
+  position: absolute;
+  right: 70px;
+  bottom: 30px;
+  width: 170px;
+  height: 340px;
+  background: linear-gradient(135deg, #e6ecf2 0%, #b8c4d1 100%);
+  border: 4px solid #7c8a99;
+  border-radius: 18px 18px 6px 6px;
+  box-shadow: 
+    -15px 15px 30px rgba(0,0,0,0.5),
+    inset -5px 0 15px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+}
+
+.fridge-top {
+  position: relative;
+  height: 52%;
+  border-bottom: 5px solid #8e9ca8;
+  padding: 12px;
+}
+
+.fridge-bottom {
+  position: relative;
+  height: 48%;
+  padding: 12px;
+}
+
+.fridge-handle {
+  position: absolute;
+  left: 14px;
+  bottom: 18px;
+  width: 12px;
+  height: 48px;
+  background: #607285;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.fridge-top .fridge-handle {
+  bottom: 18px;
+}
+
+.fridge-brand {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #607285;
+  letter-spacing: 1px;
+}
+
+.magnet {
+  position: absolute;
+  font-size: 1.4rem;
+  filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.3));
+}
+.magnet.m1 { top: 40px; right: 30px; transform: rotate(-10deg); }
+.magnet.m2 { top: 90px; right: 50px; transform: rotate(15deg); }
+.magnet.m3 { top: 35px; right: 25px; transform: rotate(5deg); }
+.magnet.m4 { top: 85px; right: 45px; transform: rotate(-8deg); }
+
+.dent-mark {
+  position: absolute;
+  top: 45px;
+  left: -20px;
+  font-size: 2.2rem;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+/* Jikia Actor & Nose Smash Animation */
+#actor-jikia {
+  left: 60px;
+  bottom: 30px;
+}
+
+.nose-pointer {
+  position: absolute;
+  top: 35px;
+  right: 15px;
+  font-size: 1.6rem;
+  opacity: 0;
+}
+
+/* Animation: Jump nose-first into fridge! */
+.anim-jikia-nose-dive {
+  animation: jikiaNoseSmash 3.4s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes jikiaNoseSmash {
+  0% {
+    left: 60px;
+    bottom: 30px;
+    transform: rotate(0deg) scale(1);
+  }
+  20% {
+    /* Crouch / windup */
+    left: 40px;
+    bottom: 20px;
+    transform: rotate(-15deg) scale(0.9, 1.1);
+  }
+  45% {
+    /* Rocket launch into the air, tilted nose first! */
+    left: 450px;
+    bottom: 180px;
+    transform: rotate(25deg) scale(1.15, 0.95);
+  }
+  55% {
+    /* NOSE SMASHES INTO THE UPPER FRIDGE DOOR! */
+    left: 560px;
+    bottom: 195px;
+    transform: rotate(35deg) scale(1.2, 0.85);
+  }
+  60% {
+    /* Bounce / recoil shock */
+    left: 510px;
+    bottom: 175px;
+    transform: rotate(15deg) scale(0.9, 1.1);
+  }
+  75% {
+    /* Falling dizzy */
+    left: 460px;
+    bottom: 30px;
+    transform: rotate(-60deg) scale(1);
+  }
+  85%, 100% {
+    /* Flat on floor dizzy */
+    left: 460px;
+    bottom: 25px;
+    transform: rotate(-85deg) scale(1);
+  }
+}
+
+.fridge-shake {
+  animation: fridgeHitShake 0.6s ease-out;
+}
+
+@keyframes fridgeHitShake {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(18px) rotate(3deg); }
+  30% { transform: translateX(-12px) rotate(-2deg); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* ========================================================
+   SCENE 2: JULAQA'S ROOM (თავით ხტება)
+   ======================================================== */
+#scene-julaqa {
+  background: linear-gradient(180deg, #3d2a45 0%, #1e1526 70%, #120e17 100%);
+}
+
+.living-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75%;
+}
+
+.julaqa-poster {
+  position: absolute;
+  top: 35px;
+  left: 280px;
+  background: #ffcc00;
+  color: #111;
+  padding: 8px 16px;
+  font-weight: 900;
+  font-size: 1rem;
+  border: 3px solid #111;
+  transform: rotate(-3deg);
+  box-shadow: 4px 4px 0 #000;
+}
+
+.shelf-trophy {
+  position: absolute;
+  top: 95px;
+  left: 270px;
+  background: rgba(255,255,255,0.08);
+  border: 1px dashed rgba(255, 215, 0, 0.4);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+}
+
+.room-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  border-top: 5px solid #000;
+}
+
+.living-floor {
+  background: repeating-linear-gradient(90deg, #442a22 0px, #442a22 50px, #362019 50px, #362019 100px);
+}
+
+/* High Wardrobe / Platform */
+.high-platform {
+  position: absolute;
+  left: 30px;
+  bottom: 25px;
+  width: 150px;
+  height: 290px;
+  background: #5c3a21;
+  border: 4px solid #361f0e;
+  border-radius: 6px;
+  box-shadow: 10px 10px 25px rgba(0,0,0,0.6);
+  z-index: 10;
+}
+
+.platform-top {
+  background: #e65100;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-align: center;
+  padding: 4px 0;
+  letter-spacing: 0.5px;
+}
+
+.wardrobe-body {
+  display: flex;
+  height: 260px;
+  border-top: 3px solid #361f0e;
+}
+
+.wardrobe-door {
+  flex: 1;
+  border-right: 2px solid #361f0e;
+}
+
+/* Julaqa's Refrigerator */
+.julaqa-fridge {
+  position: absolute;
+  right: 70px;
+  bottom: 25px;
+  width: 170px;
+  height: 340px;
+  background: linear-gradient(135deg, #1b3d37 0%, #0d2621 100%);
+  border: 4px solid #2e665c;
+  border-radius: 18px 18px 6px 6px;
+  box-shadow: -15px 15px 30px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+}
+
+.julaqa-fridge .fridge-top {
+  position: relative;
+  height: 52%;
+  border-bottom: 5px solid #2e665c;
+  padding: 12px;
+}
+
+.julaqa-fridge .fridge-bottom {
+  position: relative;
+  height: 48%;
+  padding: 12px;
+}
+
+.julaqa-fridge .fridge-brand {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #55c4b1;
+  letter-spacing: 1px;
+}
+
+/* Mouth Cigarette with Smoke */
+.mouth-cigarette {
+  position: absolute;
+  top: 62px;
+  right: 28px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  transform: rotate(-10deg);
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.9));
+}
+
+.cig-stick {
+  font-size: 1.5rem;
+}
+
+.cig-smoke {
+  font-size: 1.2rem;
+  animation: cigSmokePuff 1.2s infinite ease-out;
+  margin-left: -4px;
+  margin-top: -12px;
+}
+
+@keyframes cigSmokePuff {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0.3; }
+  50% { opacity: 0.9; }
+  100% { transform: translate(14px, -18px) scale(1.4); opacity: 0; }
+}
+
+/* Julaqa Jump Onto Fridge Animation */
+#actor-julaqa {
+  left: 45px;
+  bottom: 280px;
+}
+
+.dive-sparks {
+  position: absolute;
+  top: -20px;
+  left: 30%;
+  font-size: 1.5rem;
+  opacity: 0;
+}
+
+.anim-julaqa-fridge-jump {
+  animation: julaqaFridgeJump 3.5s forwards cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes julaqaFridgeJump {
+  0% {
+    left: 45px;
+    bottom: 280px;
+    transform: rotate(0deg);
+  }
+  20% {
+    /* Winds up on the platform */
+    left: 40px;
+    bottom: 295px;
+    transform: rotate(-12deg) scale(0.95, 1.05);
+  }
+  45% {
+    /* Rockets through the air with cigarette smoking! */
+    left: 320px;
+    bottom: 370px;
+    transform: rotate(20deg) scale(1.15);
+  }
+  60% {
+    /* SMASHES / LANDS SQUARELY ON TOP OF JULAQA'S FRIDGE! */
+    left: 540px;
+    bottom: 240px;
+    transform: rotate(5deg) scale(1.1, 0.9);
+  }
+  70% {
+    /* Bounces and balances on the fridge */
+    left: 535px;
+    bottom: 250px;
+    transform: rotate(-5deg);
+  }
+  80%, 100% {
+    /* Sticking on the fridge posing with cigarette */
+    left: 535px;
+    bottom: 240px;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* ========================================================
+   SCENE 3: BEKA'S ROOM (ტუალეტის ქაღალდს ეძებს)
+   ======================================================== */
+#scene-beka {
+  background: linear-gradient(180deg, #1b3d45 0%, #10242a 70%, #0a171b 100%);
+}
+
+.bathroom-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75%;
+}
+
+.bathroom-tiles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 45px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.06) 0px, rgba(255,255,255,0.06) 2px, transparent 2px, transparent 45px);
+}
+
+.mirror {
+  position: absolute;
+  top: 30px;
+  right: 180px;
+  width: 110px;
+  height: 140px;
+  background: linear-gradient(135deg, #a8e0e8 0%, #68b0be 100%);
+  border: 4px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.mirror-glare {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 25px;
+  height: 100px;
+  background: rgba(255,255,255,0.4);
+  transform: skewX(-20deg);
+}
+
+.bathroom-floor {
+  background: repeating-linear-gradient(45deg, #16363a 0px, #16363a 25px, #0e2225 25px, #0e2225 50px);
+}
+
+/* Toilet Fixture */
+.toilet-fixture {
+  position: absolute;
+  left: 90px;
+  bottom: 25px;
+  width: 110px;
+  height: 180px;
+  z-index: 10;
+}
+
+.toilet-tank {
+  width: 90px;
+  height: 95px;
+  background: #f0f0f0;
+  border: 3px solid #ccc;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+}
+
+.flush-lever {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  width: 16px;
+  height: 6px;
+  background: #999;
+}
+
+.toilet-bowl {
+  width: 110px;
+  height: 85px;
+  background: #e6e6e6;
+  border: 3px solid #ccc;
+  border-radius: 0 0 40px 40px;
+  margin-top: -5px;
+  box-shadow: 4px 8px 15px rgba(0,0,0,0.3);
+}
+
+/* Paper Holder */
+.paper-holder {
+  position: absolute;
+  left: 215px;
+  bottom: 120px;
+  z-index: 15;
+}
+
+.empty-roll {
+  background: #ff0055;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 4px 8px;
+  border-radius: 6px;
+  animation: pulseEmpty 1s infinite alternate;
+}
+
+@keyframes pulseEmpty {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+/* Sink & Cabinet */
+.sink-cabinet {
+  position: absolute;
+  right: 140px;
+  bottom: 25px;
+  width: 160px;
+  height: 170px;
+  z-index: 12;
+}
+
+.sink-basin {
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+.cabinet-doors {
+  display: flex;
+  height: 120px;
+  background: #4a2d18;
+  border: 3px solid #2e1a0d;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.c-door {
+  flex: 1;
+  background: #613b1f;
+  border: 1px solid #2e1a0d;
+  transition: transform 0.3s ease;
+}
+
+.c-door.open-left {
+  transform: rotateY(-70deg);
+}
+.c-door.open-right {
+  transform: rotateY(70deg);
+}
+
+/* Beka Actor & Searching Animation */
+#actor-beka {
+  left: 360px;
+  bottom: 25px;
+}
+
+.sweat-drops {
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  font-size: 1.8rem;
+  opacity: 0;
+}
+
+.anim-beka-search {
+  animation: bekaPaperPanic 4s forwards ease-in-out;
+}
+
+@keyframes bekaPaperPanic {
+  0% {
+    left: 360px;
+    bottom: 25px;
+    transform: scaleX(1);
+  }
+  15% {
+    /* Runs left to toilet paper holder */
+    left: 170px;
+    bottom: 25px;
+    transform: scaleX(-1);
+  }
+  30% {
+    /* Checks empty roll and panics */
+    left: 170px;
+    bottom: 25px;
+    transform: scaleX(-1) translateY(-10px);
+  }
+  50% {
+    /* Sprints across room to the sink cabinet */
+    left: 560px;
+    bottom: 25px;
+    transform: scaleX(1);
+  }
+  70% {
+    /* Digging inside cabinet desperately */
+    left: 570px;
+    bottom: 15px;
+    transform: scaleX(1) rotate(15deg);
+  }
+  85% {
+    /* Back to center screaming with hands on head */
+    left: 380px;
+    bottom: 25px;
+    transform: scaleX(1) translateY(-20px);
+  }
+  100% {
+    left: 380px;
+    bottom: 25px;
+    transform: scaleX(1);
+  }
+}
+
+/* ========================================================
+   SCENE 4: GIGI'S ROOM (ფანჯრიდან შემოდის და ყიყლიყო)
+   "მარტო ფანჯარა იყოს რა და მაგიდა სადაც ყიყლიყო დევს"
+   ======================================================== */
+#scene-gigi {
+  background: linear-gradient(180deg, #382c23 0%, #201914 70%, #14100c 100%);
+}
+
+.gigi-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75%;
+}
+
+.wall-texture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 60%);
+}
+
+.gigi-floor {
+  background: repeating-linear-gradient(90deg, #3d2314 0px, #3d2314 60px, #2b180d 60px, #2b180d 120px);
+}
+
+/* The Window */
+.window-container {
+  position: absolute;
+  left: 80px;
+  top: 40px;
+  width: 220px;
+  height: 250px;
+  z-index: 10;
+}
+
+.window-outside-sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #5dade2 0%, #aed6f1 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+}
+
+.sky-sun {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2.2rem;
+  animation: sunGlow 3s infinite alternate ease-in-out;
+}
+
+@keyframes sunGlow {
+  from { transform: scale(1); }
+  to { transform: scale(1.15); }
+}
+
+.window-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 8px solid #fdfefe;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  display: flex;
+}
+
+.window-pane {
+  flex: 1;
+  border: 3px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.15);
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: left center;
+}
+
+.window-pane.right {
+  transform-origin: right center;
+}
+
+.window-pane.open-left {
+  transform: perspective(600px) rotateY(-85deg);
+}
+
+.window-pane.open-right {
+  transform: perspective(600px) rotateY(85deg);
+}
+
+.window-sill {
+  position: absolute;
+  bottom: -12px;
+  left: -15px;
+  width: calc(100% + 30px);
+  height: 16px;
+  background: #eaeded;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.curtain {
+  position: absolute;
+  top: -10px;
+  width: 40px;
+  height: 240px;
+  background: #c0392b;
+  border-radius: 4px;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.4);
+}
+.curtain.c-left { left: -15px; }
+.curtain.c-right { right: -15px; }
+
+/* The Table with ყიყლიყო */
+.table-container {
+  position: absolute;
+  right: 120px;
+  bottom: 25px;
+  width: 320px;
+  height: 200px;
+  z-index: 15;
+}
+
+.table-surface {
+  width: 100%;
+  height: 35px;
+  background: linear-gradient(180deg, #a0522d 0%, #804020 100%);
+  border: 3px solid #5c2d13;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.table-leg {
+  position: absolute;
+  width: 22px;
+  height: 165px;
+  background: #703818;
+  border: 2px solid #4a230c;
+  bottom: 0;
+}
+.table-leg.left { left: 40px; }
+.table-leg.right { right: 40px; }
+
+/* Plate with ყიყლიყო (French Toast) */
+.plate-wrapper {
+  position: absolute;
+  top: -85px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plate {
+  position: relative;
+  width: 160px;
+  height: 60px;
+  background: radial-gradient(ellipse at center, #ffffff 0%, #dcdde1 100%);
+  border: 3px solid #718093;
+  border-radius: 50%;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.georgian-yiyliyo {
+  position: relative;
+  width: 140px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yiyliyo-slice {
+  position: absolute;
+  width: 68px;
+  height: 52px;
+  background: linear-gradient(135deg, #e59837 0%, #c6761b 35%, #ffd257 65%, #d48320 100%);
+  border: 3px solid #773805;
+  border-radius: 8px 8px 14px 14px;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yiyliyo-slice.s1 {
+  transform: rotate(-15deg) translate(-14px, -4px);
+}
+
+.yiyliyo-slice.s2 {
+  transform: rotate(18deg) translate(14px, -2px);
+}
+
+.bread-crust {
+  position: absolute;
+  top: -3px;
+  width: 100%;
+  height: 8px;
+  background: #612d04;
+  border-radius: 6px 6px 0 0;
+}
+
+.egg-fried-center {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));
+}
+
+.steam-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: -15px;
+}
+
+.steam {
+  font-size: 1.6rem;
+  animation: steamRise 1.8s infinite ease-out;
+  opacity: 0;
+}
+.steam.s1 { animation-delay: 0s; }
+.steam.s2 { animation-delay: 0.6s; }
+.steam.s3 { animation-delay: 1.2s; }
+
+@keyframes steamRise {
+  0% { transform: translateY(10px) scale(0.6); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-40px) scale(1.3); opacity: 0; }
+}
+
+.dish-label {
+  margin-top: 10px;
+  background: rgba(0,0,0,0.7);
+  color: var(--accent-gold);
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--accent-gold);
+}
+
+/* Gigi Character Sneaking Through Window */
+#actor-gigi {
+  left: 110px;
+  top: 15px;
+  opacity: 0;
+}
+
+.heart-eyes {
+  position: absolute;
+  top: -20px;
+  right: 15px;
+  font-size: 1.8rem;
+  opacity: 0;
+}
+
+.anim-gigi-window {
+  animation: gigiWindowSneak 4.5s forwards cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes gigiWindowSneak {
+  0% {
+    left: 110px;
+    top: -120px;
+    opacity: 0;
+    transform: scale(0.7) rotate(0deg);
+  }
+  15% {
+    /* Head pops into window from outside! */
+    left: 110px;
+    top: 50px;
+    opacity: 1;
+    transform: scale(0.85) rotate(-5deg);
+  }
+  35% {
+    /* Climbs through the window sill */
+    left: 140px;
+    top: 120px;
+    opacity: 1;
+    transform: scale(1) rotate(10deg);
+  }
+  55% {
+    /* Drops to floor and smells the air */
+    left: 230px;
+    top: 250px;
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  75%, 100% {
+    /* Lunges excitedly towards the table with ყიყლიყო! */
+    left: 360px;
+    top: 230px;
+    opacity: 1;
+    transform: scale(1.15) rotate(15deg);
+  }
+}
+
+/* ========================================================
+   BOTTOM CONTROLS & FOOTER
+   ======================================================== */
+.game-footer {
+  background: #151824;
+  border-top: 2px solid var(--border-neon);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.scene-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00ff66;
+  box-shadow: 0 0 10px #00ff66;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.5; }
+}
+
+.action-play-btn {
+  font-size: 1rem;
+  padding: 12px 28px;
+  background: linear-gradient(180deg, #00f0ff 0%, #0088cc 100%);
+  box-shadow: 0 6px 0 #005588, 0 8px 20px rgba(0, 240, 255, 0.4);
+}
+
+.action-play-btn:hover {
+  box-shadow: 0 8px 0 #005588, 0 12px 25px rgba(0, 240, 255, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rooms-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .game-stage {
+    height: 440px;
+  }
+  
+  .fridge-wrapper {
+    right: 20px;
+    width: 130px;
+    height: 280px;
+  }
+  
+  .table-container {
+    right: 20px;
+    width: 220px;
+  }
+
+  .character-sprite-wrapper {
+    width: 120px;
+    height: 170px;
+  }
+}

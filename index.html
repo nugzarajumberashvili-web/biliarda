@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ბილიარდას თავგადასავალი</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+Georgian:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Audio mute toggle button -->
+  <button id="soundToggleBtn" class="sound-toggle-btn" title="ხმის ჩართვა/გამორთვა">
+    <span id="soundIcon">🔊</span>
+  </button>
+
+  <!-- SCREEN 1: CHARACTER SELECTION SCREEN -->
+  <section id="selectScreen" class="screen active-screen">
+    <div class="stars-bg"></div>
+    <div class="select-container">
+      <h1 class="main-title glitch-text">ბილიარდა</h1>
+      <p class="subtitle">აირჩიე მთავარი გმირი და დაიწყე თავგადასავალი</p>
+
+      <div class="character-card-container">
+        <div class="character-card" id="biliardaCard">
+          <div class="card-glow"></div>
+          <div class="photo-frame">
+            <img src="assets/biliarda_select.jpg" onerror="this.onerror=null; this.src='biliarda_select.jpg';" alt="ბილიარდა" class="char-photo" id="charSelectPhoto">
+            <div class="corner-decoration top-left"></div>
+            <div class="corner-decoration top-right"></div>
+            <div class="corner-decoration bottom-left"></div>
+            <div class="corner-decoration bottom-right"></div>
+          </div>
+          <div class="char-info">
+            <h2 class="char-name">ბილიარდა</h2>
+            <div class="char-tags">
+              <span class="tag">ნარუტო</span>
+              <span class="tag">ცხვირ-მასტერი</span>
+              <span class="tag">ბაითების რეიდერი</span>
+            </div>
+            <div class="char-stats">
+              <div class="stat-row">
+                <span>ცხვირის ძალა:</span>
+                <div class="stat-bar"><div class="stat-fill" style="width: 100%;"></div></div>
+              </div>
+              <div class="stat-row">
+                <span>თავით ხტომა:</span>
+                <div class="stat-bar"><div class="stat-fill" style="width: 95%;"></div></div>
+              </div>
+              <div class="stat-row">
+                <span>ყიყლიყოს სიყვარული:</span>
+                <div class="stat-bar"><div class="stat-fill" style="width: 100%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main action button -->
+      <div class="button-wrapper">
+        <button id="selectBtn" class="arcade-btn select-btn">
+          <span class="btn-text">არჩევა</span>
+          <span class="btn-shine"></span>
+        </button>
+      </div>
+
+      <p class="warning-hint">⚠️ გაფრთხილება: გადაწყვეტილება შეიძლება ყლეობა იყოს</p>
+    </div>
+  </section>
+
+  <!-- WARNING MODAL (Funny Dialogs) -->
+  <div id="warningModal" class="modal-overlay">
+    <div class="modal-box" id="modalBox">
+      <div class="modal-header">
+        <span class="modal-icon" id="modalIcon">⚠️</span>
+        <h3 id="modalTitle">სისტემური გაფრთხილება!</h3>
+      </div>
+      <div class="modal-body">
+        <p id="modalMessage" class="modal-text"></p>
+      </div>
+      <div class="modal-actions">
+        <button id="modalActionBtn" class="arcade-btn modal-btn">გასაგებია</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: GAME SCREEN -->
+  <section id="gameScreen" class="screen">
+    <!-- Top Bar Navigation -->
+    <header class="game-header">
+      <div class="header-left">
+        <button id="backToSelectBtn" class="nav-btn">↩️ უკან</button>
+        <div class="player-mini-badge">
+          <img src="assets/biliarda_select.jpg" onerror="this.onerror=null; this.src='biliarda_select.jpg';" alt="ბილიარდა მინი" class="mini-avatar">
+          <span class="player-label">ბილიარდა (ბომჟის ფორმაში)</span>
+        </div>
+      </div>
+      <h2 class="game-header-title">აირჩიე ბაითი:</h2>
+      <div class="header-right">
+        <button id="replayBtn" class="nav-btn replay-btn" title="თავიდან გაშვება">🔄 თავიდან გაშვება</button>
+      </div>
+    </header>
+
+    <!-- Rooms / Locations Selector Tabs -->
+    <nav class="rooms-nav">
+      <button class="room-tab active" data-room="jikia">
+        <span class="room-icon">🧊</span>
+        <span class="room-name">ჯიქიას ბაითი</span>
+        <span class="room-desc">მაცივარს ახტება ცხვირით</span>
+      </button>
+      <button class="room-tab" data-room="julaqa">
+        <span class="room-icon">🧊</span>
+        <span class="room-name">ჯულაყას ბაითი</span>
+        <span class="room-desc">მაცივარს ახტება (სიგარეტით)</span>
+      </button>
+      <button class="room-tab" data-room="gigi">
+        <span class="room-icon">🍞</span>
+        <span class="room-name">გიგის ბაითი</span>
+        <span class="room-desc">ფანჯრიდან შემოდის & ყიყლიყო</span>
+      </button>
+    </nav>
+
+    <!-- Interactive Game Stage -->
+    <main class="game-stage-container">
+      <div class="game-stage" id="gameStage">
+
+        <!-- Speech / Comic Bubble -->
+        <div id="speechBubble" class="speech-bubble">
+          <p id="speechText">გაუმარჯოს სასტავს!</p>
+          <div class="speech-pointer"></div>
+        </div>
+
+        <!-- Impact Effect Layer -->
+        <div id="fxLayer" class="fx-layer"></div>
+
+        <!-- ==================== ROOM 1: JIKIA ==================== -->
+        <div class="room-scene active-scene" id="scene-jikia">
+          <div class="kitchen-wall">
+            <div class="kitchen-clock"><div class="clock-hand"></div></div>
+            <div class="kitchen-tile-grid"></div>
+            <div class="kitchen-shelf">
+              <span class="shelf-item jar1">🫙</span>
+              <span class="shelf-item jar2">🥫</span>
+              <span class="shelf-item jar3">🧂</span>
+            </div>
+          </div>
+          <div class="kitchen-floor"></div>
+
+          <!-- The Refrigerator -->
+          <div class="fridge-wrapper" id="fridge">
+            <div class="fridge-top">
+              <div class="fridge-handle"></div>
+              <div class="magnet m1">🍕</div>
+              <div class="magnet m2">⭐</div>
+              <div class="fridge-brand">JIKIA-FROST</div>
+              <div class="dent-mark" id="fridgeDent">💥</div>
+            </div>
+            <div class="fridge-bottom">
+              <div class="fridge-handle"></div>
+              <div class="magnet m3">🍺</div>
+              <div class="magnet m4">🥩</div>
+            </div>
+          </div>
+
+          <!-- Character Actor in Jikia Scene -->
+          <div class="character-actor" id="actor-jikia">
+            <div class="character-sprite-wrapper">
+              <img src="assets/character_hobo.png" onerror="this.onerror=null; this.src='character_hobo.png';" alt="ბილიარდა" class="char-img">
+              <div class="speed-lines" id="jikiaSpeedLines"></div>
+              <div class="nose-pointer" id="jikiaNose">👃💥</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== ROOM 2: JULAQA ==================== -->
+        <div class="room-scene" id="scene-julaqa">
+          <div class="living-wall">
+            <div class="julaqa-poster">
+              <span>ჯულაყას არენა 🥋</span>
+            </div>
+            <div class="shelf-trophy">
+              <span>🏆 თავით ხტომის ჩემპიონი 2026</span>
+            </div>
+          </div>
+          <div class="room-floor living-floor"></div>
+
+          <!-- The High Platform / Wardrobe -->
+          <div class="high-platform">
+            <div class="platform-top">ასაფრენი ბილიკი</div>
+            <div class="wardrobe-body">
+              <div class="wardrobe-door"></div>
+              <div class="wardrobe-door"></div>
+            </div>
+          </div>
+
+          <!-- Julaqa's Fridge (მაცივარი) -->
+          <div class="fridge-wrapper julaqa-fridge" id="julaqaFridge">
+            <div class="fridge-top">
+              <div class="fridge-handle"></div>
+              <div class="magnet m1">💀</div>
+              <div class="magnet m2">🔥</div>
+              <div class="fridge-brand">JULAQA-COOL</div>
+              <div class="dent-mark" id="julaqaFridgeDent">💥</div>
+            </div>
+            <div class="fridge-bottom">
+              <div class="fridge-handle"></div>
+              <div class="magnet m3">⚡</div>
+              <div class="magnet m4">🧊</div>
+            </div>
+          </div>
+
+          <!-- Character Actor in Julaqa Scene (with cigarette in mouth!) -->
+          <div class="character-actor" id="actor-julaqa">
+            <div class="character-sprite-wrapper">
+              <img src="assets/character_hobo.png" onerror="this.onerror=null; this.src='character_hobo.png';" alt="ბილიარდა" class="char-img">
+              <div class="mouth-cigarette" id="julaqaCigarette">
+                <span class="cig-stick">🚬</span>
+                <span class="cig-smoke">💨</span>
+              </div>
+              <div class="dive-sparks" id="diveSparks">💥⚡</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== ROOM 3: GIGI ==================== -->
+        <div class="room-scene" id="scene-gigi">
+          <div class="gigi-wall">
+            <div class="wall-texture"></div>
+          </div>
+          <div class="room-floor gigi-floor"></div>
+
+          <!-- The Single Window (As requested: "მარტო ფანჯარა იყოს რა და მაგიდა სადაც ყიყლიყო დევს") -->
+          <div class="window-container" id="gigiWindow">
+            <div class="window-outside-sky">
+              <div class="sky-clouds"></div>
+              <div class="sky-sun">☀️</div>
+            </div>
+            <div class="window-frame">
+              <div class="window-pane left" id="windowPaneLeft"></div>
+              <div class="window-pane right" id="windowPaneRight"></div>
+              <div class="window-sill"></div>
+            </div>
+            <div class="curtain c-left"></div>
+            <div class="curtain c-right"></div>
+          </div>
+
+          <!-- The Table with ყიყლიყო (French Toast) -->
+          <div class="table-container" id="gigiTable">
+            <div class="table-surface">
+              <!-- Plate with Georgian ყიყლიყო (კვერცხში ამოვლებული შემწვარი პური) -->
+              <div class="plate-wrapper">
+                <div class="plate">
+                  <div class="georgian-yiyliyo">
+                    <div class="yiyliyo-slice s1">
+                      <div class="bread-crust"></div>
+                      <div class="egg-fried-center">🍳</div>
+                    </div>
+                    <div class="yiyliyo-slice s2">
+                      <div class="bread-crust"></div>
+                      <div class="egg-fried-center">🍳</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Rising delicious steam -->
+                <div class="steam-container">
+                  <span class="steam s1">♨️</span>
+                  <span class="steam s2">♨️</span>
+                  <span class="steam s3">♨️</span>
+                </div>
+                <div class="dish-label">გიგის ცხელი ყიყლიყო (კვერცხიანი შემწვარი პური) 🍳🍞✨</div>
+              </div>
+            </div>
+            <div class="table-leg left"></div>
+            <div class="table-leg right"></div>
+          </div>
+
+          <!-- Character Actor in Gigi Scene (Sneaks through window) -->
+          <div class="character-actor" id="actor-gigi">
+            <div class="character-sprite-wrapper">
+              <img src="assets/character_hobo.png" onerror="this.onerror=null; this.src='character_hobo.png';" alt="ბილიარდა" class="char-img">
+              <div class="heart-eyes" id="heartEyes">😍🤤💖</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Bottom Controls & Description Banner -->
+    <footer class="game-footer">
+      <div class="scene-status-badge">
+        <span class="status-dot"></span>
+        <span id="sceneDescription">ჯიქიას ბაითი: ბილიარდა ემზადება ცხვირით მაცივარზე სახტომად!</span>
+      </div>
+      <div class="footer-buttons">
+        <button id="actionTriggerBtn" class="arcade-btn action-play-btn">
+          💥 მოქმედების ჩართვა
+        </button>
+      </div>
+    </footer>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
